@@ -1,10 +1,10 @@
-if $facts[::operatingsystem] == "CentOS" {
+if $facts['os']['family'] == 'CentOS' {
 	$service_name = 'ntpd'
-	$conf_file = 'ntpd.conf.el'
+	$conf_file = 'ntp.conf.el'
 }
-elsif $facts[::operatingsystem] == "Debian" {
+elsif $facts['os']['family'] == 'Debian' {
 	$service_name = 'ntp'
-	$conf_file = 'ntpd.conf.debian'
+	$conf_file = 'ntp.conf.debian'
 }
 else {
 	fail ("Sistema Operacional não reconhecido")
@@ -24,7 +24,7 @@ Service {"$service_name":
 file { '$conf_file':
 	ensure	=>	present,
 	path	=>	"/etc/ntp.conf",
-	source	=>	"backup/puppet/files/ntp/$conf_file",
+	source	=>	"/backup/puppet/files/ntp/$conf_file",
 	notify	=>	Service["$service_name"],
 	require	=>	Package['ntp'],
 }
