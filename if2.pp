@@ -1,8 +1,8 @@
-if $facts['os']['family'] == 'CentOS' {
+if $::operatingsystem == 'CentOS' {
 	$service_name = 'ntpd'
 	$conf_file = 'ntp.conf.el'
 }
-elsif $facts['os']['family'] == 'Debian' {
+elsif $::operatingsystem == 'Debian' {
 	$service_name = 'ntp'
 	$conf_file = 'ntp.conf.debian'
 }
@@ -30,6 +30,6 @@ file { '$conf_file':
 }
 
 
-notify {'$operatingsystem':}
+notify {'$::operatingsystem':}
 notify {'$service_name':}
 notify {'$conf_file':}
